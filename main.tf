@@ -64,7 +64,7 @@ module "base_rg_vnet_public_subnet_nsg_default_rule" {
   destination_address_prefix = "*"
 }
 
-module "base_rg_vnet_public_subnet_nsg_default_rule" {
+module "base_rg_vnet_public_subnet_nsg_outbound_rule" {
   source                 = "./modules/network_security_rule"
   name                   = "default_public_nsg_rule_outbound_allow_https"
   resource_group         = module.base_resource_group.name
