@@ -1,9 +1,0 @@
-image: hashicorp/terraform
-
-stages:
-  - validate
-  
-validate:
-  stage: validate
-  script:
-    - terraform validate
