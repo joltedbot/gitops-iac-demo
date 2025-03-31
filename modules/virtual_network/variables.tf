@@ -1,22 +1,22 @@
-variable name {
-    description = "The name of the resource group to create"
+variable "name" {
+  description = "The name of the resource group to create"
 }
 
-variable resource_group {
-    description = "The name of the resource group to use for this virtual network"
+variable "resource_group" {
+  description = "The name of the resource group to use for this virtual network"
 }
 
-variable address_space {
-    description = "The address space that this network should use. This will be divided up into subnets separately"
+variable "address_space" {
+  description = "The address space that this network should use. This will be divided up into subnets separately"
 }
 
-variable region {
-    description = "The Azure region in which to create the resource group"
-    default = "Canada Central"
+variable "region" {
+  description = "The Azure region in which to create the resource group"
+  default     = "Canada Central"
 }
 
 
 // Variables to set tag fields for all resources that will use them. Should be set from the top level main.tf
-variable tag-owner {}
-variable tag-project {}
-variable tag-lifetime {}
+variable "tag-owner" {}
+variable "tag-project" {}
+variable "tag-lifetime" {}
