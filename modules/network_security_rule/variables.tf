@@ -42,6 +42,11 @@ variable "source_address_prefix" {
   default     = "*"
 }
 
+
+variable "source_port_range" {
+  description = "The range of source ports that the rule should match. Can be a value 22 or a range 20-52"
+}
+
 // Variables to set tag fields for all resources that will use them. Should be set from the top level main.tf
 variable "tag-owner" {}
 variable "tag-project" {}
