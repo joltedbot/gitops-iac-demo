@@ -1,7 +1,6 @@
 
 stages:
   - semgrep
-
 semgrep:
   stage: semgrep
   image: semgrep/semgrep
