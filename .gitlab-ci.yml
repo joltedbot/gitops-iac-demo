@@ -1,17 +1,9 @@
-
-
-include:
-  - template: Terraform/Base.latest.gitlab-ci.yml
-  - template: Jobs/SAST-IaC.gitlab-ci.yml
-
+image: gitlab-opentofu
 
 stages:
   - validate
-  - test
-  - cleanup
   
-fmt:
-  extends: .terraform:fmt
-
 validate:
-  extends: .terraform:validate
+  stage: validate
+  script:
+    - terraform validate
