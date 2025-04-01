@@ -94,7 +94,7 @@ module "base_environment_jump_host" {
   tag-lifetime      = var.tag-lifetime
   subnet            = module.base_public_subnet.id
   vm_size           = "Standard_B1s"
-  root_user         = "administrator"
+  root_user         = "jumphost-root"
   root_user_pub_key = var.root_user_pub_key
   custom_data       = base64encode(file("./boot_scripts/jumphost.sh"))
 
