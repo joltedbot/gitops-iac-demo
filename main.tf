@@ -82,3 +82,20 @@ module "base_rg_vnet_public_subnet_nsg_outbound_rule" {
   destination_port_range     = "443"
   destination_address_prefix = "*"
 }
+
+module "base_environment_jump_host" {
+  source            = "./modules/linux_vm"
+  name              = "jumphost"
+  hostname          = "lab-jumphost"
+  resource_group    = module.base_resource_group.name
+  region            = var.region
+  tag-owner         = var.tag-owner
+  tag-project       = var.tag-project
+  tag-lifetime      = var.tag-lifetime
+  subnet            = module.base_public_subnet.id
+  vm_size           = "Standard_B1s"
+  root_user         = "administrator"
+  root_user_pub_key = var.root_user_pub_key
+  custom_data       = base64encode(file("./boot_scripts/jumphost.sh"))
+
+}

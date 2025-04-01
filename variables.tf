@@ -27,3 +27,7 @@ variable "tag-lifetime" {
   description = "How long should these resources live. Can they be destroyed or should they live indefinitely?"
   default     = "Ephemeral"
 }
+
+variable "root_user_pub_key" {
+  description = "The Public Key of an SSH key pair to use for the root user for this VM.  Set this via the terraform workspace variables."
+}
