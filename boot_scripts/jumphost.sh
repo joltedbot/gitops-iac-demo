@@ -1,4 +1,4 @@
 #!/bin/bash
 
-yum update -y
-yum install curl
+sudo apt-get update -y
+sudo apt-get install fish -y
