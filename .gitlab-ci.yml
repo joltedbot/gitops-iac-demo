@@ -7,7 +7,7 @@ stages:
 init:
   stage: .pre
   script:
-    - gitlab-terraform init
+    - gitlab-terraform init -backend=false
 
 fmt:
   stage: .pre
