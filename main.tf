@@ -19,9 +19,17 @@ module "base_virtual_network" {
   tag-lifetime   = var.tag-lifetime
 }
 
-module "base_public_subnet" {
+module "azure_firewall_subnet" {
   source          = "./modules/subnet"
   name            = "AzureFirewallSubnet"
+  resource_group  = module.base_resource_group.name
+  virtual_network = module.base_virtual_network.name
+  address_space   = ["10.0.0.0/24"]
+}
+
+module "base_public_subnet" {
+  source          = "./modules/subnet"
+  name            = "Base_Shared_Resources_Private_Subnet"
   resource_group  = module.base_resource_group.name
   virtual_network = module.base_virtual_network.name
   address_space   = ["10.0.1.0/24"]
@@ -89,7 +97,7 @@ module "public_subnet_firewall_ip_address" {
   name              = "lab-firewall-ip"
   resource_group    = module.base_resource_group.name
   region            = var.region
-  allocation_method = "Dynamic"
+  allocation_method = "Static"
   tag-owner         = var.tag-owner
   tag-project       = var.tag-project
   tag-lifetime      = var.tag-lifetime
@@ -100,7 +108,7 @@ module "public_subnet_firewall" {
   name           = "lab-firewall"
   resource_group = module.base_resource_group.name
   region         = var.region
-  subnet         = module.base_public_subnet.id
+  subnet         = module.azure_firewall_subnet.id
   ip_address     = module.public_subnet_firewall_ip_address.id
   tag-owner      = var.tag-owner
   tag-project    = var.tag-project
