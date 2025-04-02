@@ -3,7 +3,7 @@ resource "azurerm_firewall" "lab_firewall" {
   name                = var.name
   location            = var.region
   resource_group_name = var.resource_group
-  firewall_policy_id  = azurerm_firewall_policy.lab_firewall_policy.id
+
 
   tags = {
     owner    = var.tag-owner
@@ -19,20 +19,6 @@ resource "azurerm_firewall" "lab_firewall" {
     subnet_id            = var.subnet
     public_ip_address_id = var.ip_address
   }
-}
-
-
-resource "azurerm_firewall_policy" "lab_firewall_policy" {
-  name                = "${var.name}-policy"
-  resource_group_name = var.resource_group
-  location            = var.region
-
-  tags = {
-    Owner    = var.tag-owner
-    Project  = var.tag-project
-    lifetime = var.tag-lifetime
-  }
-
 }
 
 
