@@ -1,4 +1,5 @@
 
+######## Resource Group ########
 module "base_resource_group" {
   source       = "./modules/resource_group"
   name         = "Lab_Shared_Resources"
@@ -8,6 +9,7 @@ module "base_resource_group" {
   tag-lifetime = var.tag-lifetime
 }
 
+######## Base Environment Networking ########
 module "base_virtual_network" {
   source         = "./modules/virtual_network"
   name           = "Base_Shared_Resources_Vnet"
@@ -19,9 +21,11 @@ module "base_virtual_network" {
   tag-lifetime   = var.tag-lifetime
 }
 
+
+
 module "base_public_subnet" {
   source          = "./modules/subnet"
-  name            = "AzureFirewallSubnet"
+  name            = "Base_Shared_Resources_Private_Subnet"
   resource_group  = module.base_resource_group.name
   virtual_network = module.base_virtual_network.name
   address_space   = ["10.0.1.0/24"]
@@ -46,7 +50,7 @@ module "base_rg_vnet_public_subnet_nsg" {
 }
 
 module "base_rg_vnet_public_subnet_nsg_default_rule" {
-  source                 = "./modules/network_security_rule"
+  source                 = "./modules/network_security_group_rule"
   name                   = "default_public_nsg_rule_allow_ssh"
   resource_group         = module.base_resource_group.name
   network_security_group = module.base_rg_vnet_public_subnet_nsg.name
@@ -65,7 +69,7 @@ module "base_rg_vnet_public_subnet_nsg_default_rule" {
 }
 
 module "base_rg_vnet_public_subnet_nsg_outbound_rule" {
-  source                 = "./modules/network_security_rule"
+  source                 = "./modules/network_security_group_rule"
   name                   = "default_public_nsg_rule_outbound_allow_https"
   resource_group         = module.base_resource_group.name
   network_security_group = module.base_rg_vnet_public_subnet_nsg.name
@@ -84,12 +88,21 @@ module "base_rg_vnet_public_subnet_nsg_outbound_rule" {
 }
 
 
+######## Azure Firewall ########
+module "azure_firewall_subnet" {
+  source          = "./modules/subnet"
+  name            = "AzureFirewallSubnet"
+  resource_group  = module.base_resource_group.name
+  virtual_network = module.base_virtual_network.name
+  address_space   = ["10.0.3.0/24"]
+}
+
 module "public_subnet_firewall_ip_address" {
   source            = "./modules/public_ip"
   name              = "lab-firewall-ip"
   resource_group    = module.base_resource_group.name
   region            = var.region
-  allocation_method = "Dynamic"
+  allocation_method = "Static"
   tag-owner         = var.tag-owner
   tag-project       = var.tag-project
   tag-lifetime      = var.tag-lifetime
@@ -100,7 +113,7 @@ module "public_subnet_firewall" {
   name           = "lab-firewall"
   resource_group = module.base_resource_group.name
   region         = var.region
-  subnet         = module.base_public_subnet.id
+  subnet         = module.azure_firewall_subnet.id
   ip_address     = module.public_subnet_firewall_ip_address.id
   tag-owner      = var.tag-owner
   tag-project    = var.tag-project
@@ -132,6 +145,11 @@ module "public_firewall_rule_default_deny_ingress" {
   destination_addresses = ["*"]
   protocols             = ["Any"]
 }
+
+
+
+
+######## Virtual Machines ########
 
 module "base_environment_jump_host" {
   source             = "./modules/linux_vm"

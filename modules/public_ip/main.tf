@@ -3,6 +3,7 @@ resource "azurerm_public_ip" "vnic_ip" {
   location            = var.region
   resource_group_name = var.resource_group
   allocation_method   = var.allocation_method
+  sku                 = "Standard"
 
   tags = {
     Owner    = var.tag-owner
