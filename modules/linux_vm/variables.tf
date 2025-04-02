@@ -7,12 +7,9 @@ variable "nic_name" {
   default     = "vnic1"
 }
 
-
-variable "ip_name" {
-  description = "The name of the resource group to create"
-  default     = "vnic1_ip"
+variable "private_ip_address" {
+  description = "The static private IP address to assign to the VM's network interface"
 }
-
 
 variable "region" {
   description = "The Azure region in which to create the resource group"

@@ -1,6 +1,25 @@
+image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 
 stages:
+  - validate
   - semgrep
+
+init:
+  stage: .pre
+  script:
+    - gitlab-terraform init -backend=false
+
+fmt:
+  stage: .pre
+  script:
+    - gitlab-terraform fmt
+
+validate:
+  stage: validate
+  script:
+    - gitlab-terraform validate
+
+
 semgrep:
   stage: semgrep
   image: semgrep/semgrep

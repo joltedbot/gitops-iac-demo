@@ -5,6 +5,7 @@ terraform {
     workspaces {
       name = "azure_base_environment"
     }
+
   }
 
   required_providers {

@@ -83,19 +83,89 @@ module "base_rg_vnet_public_subnet_nsg_outbound_rule" {
   destination_address_prefix = "*"
 }
 
-module "base_environment_jump_host" {
-  source            = "./modules/linux_vm"
-  name              = "jumphost"
-  hostname          = "lab-jumphost"
+
+module "public_subnet_firewall_ip_address" {
+  source            = "./modules/public_ip"
+  name              = "lab-firewall-ip"
   resource_group    = module.base_resource_group.name
   region            = var.region
+  allocation_method = "Dynamic"
   tag-owner         = var.tag-owner
   tag-project       = var.tag-project
   tag-lifetime      = var.tag-lifetime
-  subnet            = module.base_public_subnet.id
-  vm_size           = "Standard_B1s"
-  root_user         = "jumphost-root"
-  root_user_pub_key = var.root_user_pub_key
-  custom_data       = base64encode(file("./boot_scripts/jumphost.sh"))
-
 }
+
+module "public_subnet_firewall" {
+  source         = "./modules/firewall"
+  name           = "lab-firewall"
+  resource_group = module.base_resource_group.name
+  region         = var.region
+  subnet         = module.base_public_subnet.id
+  ip_address     = module.public_subnet_firewall_ip_address.id
+  tag-owner      = var.tag-owner
+  tag-project    = var.tag-project
+  tag-lifetime   = var.tag-lifetime
+}
+
+module "public_firewall_rule_ssh_ingress" {
+  source                = "./modules/firewall_rule"
+  name                  = "ssh-ingress"
+  resource_group        = module.base_resource_group.name
+  firewall              = module.public_subnet_firewall.name
+  priority              = 100
+  action                = "Allow"
+  source_addresses      = var.source_addresses
+  destination_ports     = ["22"]
+  destination_addresses = [module.base_environment_jump_host.private_ip_address]
+  protocols             = ["TCP"]
+}
+
+module "public_firewall_rule_default_deny_ingress" {
+  source                = "./modules/firewall_rule"
+  name                  = "default-deny"
+  resource_group        = module.base_resource_group.name
+  firewall              = module.public_subnet_firewall.name
+  priority              = 1000
+  action                = "Deny"
+  source_addresses      = ["*"]
+  destination_ports     = ["*"]
+  destination_addresses = ["*"]
+  protocols             = ["Any"]
+}
+
+module "base_environment_jump_host" {
+  source             = "./modules/linux_vm"
+  name               = "jumphost"
+  hostname           = "lab-jumphost"
+  resource_group     = module.base_resource_group.name
+  region             = var.region
+  subnet             = module.base_public_subnet.id
+  private_ip_address = "10.0.1.10"
+  vm_size            = "Standard_B1s"
+  root_user          = "jumphost-root"
+  root_user_pub_key  = var.root_user_pub_key
+  custom_data        = base64encode(file("./boot_scripts/jumphost.sh"))
+  tag-owner          = var.tag-owner
+  tag-project        = var.tag-project
+  tag-lifetime       = var.tag-lifetime
+}
+
+
+module "base_environment_git_lab_runner" {
+  source             = "./modules/linux_vm"
+  name               = "gitlab-runner"
+  hostname           = "gitlab-runner"
+  resource_group     = module.base_resource_group.name
+  region             = var.region
+  subnet             = module.base_private_subnet.id
+  private_ip_address = "10.0.2.11"
+  vm_size            = "Standard_B1s"
+  root_user          = "runner-root"
+  root_user_pub_key  = var.root_user_pub_key
+  custom_data        = base64encode(file("./boot_scripts/jumphost.sh"))
+  tag-owner          = var.tag-owner
+  tag-project        = var.tag-project
+  tag-lifetime       = var.tag-lifetime
+}
+
+
