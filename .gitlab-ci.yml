@@ -9,16 +9,10 @@ init:
   script:
     - gitlab-terraform init -backend=false
 
-fmt:
-  stage: .pre
-  script:
-    - gitlab-terraform fmt
-
 validate:
   stage: validate
   script:
     - gitlab-terraform validate
-
 
 semgrep:
   stage: semgrep

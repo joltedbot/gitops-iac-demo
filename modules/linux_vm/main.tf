@@ -15,7 +15,7 @@ resource "azurerm_network_interface" "vnic" {
   ip_configuration {
     name                          = "${var.name}-nic"
     subnet_id                     = var.subnet
-    private_ip_address_allocation = "static"
+    private_ip_address_allocation = "Static"
     private_ip_address            = var.private_ip_address
     primary                       = true
   }
