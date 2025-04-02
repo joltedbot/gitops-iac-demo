@@ -31,3 +31,8 @@ variable "tag-lifetime" {
 variable "root_user_pub_key" {
   description = "The Public Key of an SSH key pair to use for the root user for this VM.  Set this via the terraform workspace variables."
 }
+
+variable "source_addresses" {
+  description = "The source ip addresses that the ssh firewall rule should be applied to"
+  default     = ["*"]
+}

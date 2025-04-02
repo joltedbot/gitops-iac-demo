@@ -1,16 +1,4 @@
-resource "azurerm_public_ip" "vm_vnic_ip" {
-  name                = var.ip_name
-  location            = var.region
-  resource_group_name = var.resource_group
-  allocation_method   = "Dynamic"
 
-  tags = {
-    Owner    = var.tag-owner
-    Project  = var.tag-project
-    lifetime = var.tag-lifetime
-  }
-
-}
 
 resource "azurerm_network_interface" "vnic" {
   name                = var.nic_name
@@ -25,11 +13,11 @@ resource "azurerm_network_interface" "vnic" {
 
 
   ip_configuration {
-    name                          = "vnic-1"
+    name                          = "${var.name}-nic"
     subnet_id                     = var.subnet
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = "static"
+    private_ip_address            = var.private_ip_address
     primary                       = true
-    public_ip_address_id          = azurerm_public_ip.vm_vnic_ip.id
   }
 
 }

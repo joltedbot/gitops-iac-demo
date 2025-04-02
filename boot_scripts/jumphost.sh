@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sudo apt-get update -y
-sudo apt-get install fish -y
+sudo apt-get --yes update
+sudo apt-get --yes install fish
