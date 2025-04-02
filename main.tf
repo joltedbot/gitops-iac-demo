@@ -25,7 +25,7 @@ module "base_virtual_network" {
 
 module "base_public_subnet" {
   source          = "./modules/subnet"
-  name            = "Base_Shared_Resources_Private_Subnet"
+  name            = "Base_Shared_Resources_Public_Subnet"
   resource_group  = module.base_resource_group.name
   virtual_network = module.base_virtual_network.name
   address_space   = ["10.0.1.0/24"]
