@@ -3,11 +3,11 @@ variable "name" {
 }
 
 variable "resource_group" {
-  description = "The name of the resource group to use for this ip address"
+  description = "The name of the resrouce group to use for this resource"
 }
 
 variable "region" {
-  description = "The Azure region in which to create the resource group"
+  description = "The Azure region in which to create the resource"
   default     = "Canada Central"
 }
 

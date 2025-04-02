@@ -2,6 +2,15 @@ variable "name" {
   description = "The name for the virtual machine"
 }
 
+variable "region" {
+  description = "The Azure region in which to create the resource"
+  default     = "Canada Central"
+}
+
+variable "resource_group" {
+  description = "The name of the resource group to use for this resource"
+}
+
 variable "nic_name" {
   description = "The name for the VMs nic"
   default     = "vnic1"
@@ -11,14 +20,6 @@ variable "private_ip_address" {
   description = "The static private IP address to assign to the VM's network interface"
 }
 
-variable "region" {
-  description = "The Azure region in which to create the resource group"
-  default     = "Canada Central"
-}
-
-variable "resource_group" {
-  description = "The name of the resource group to use for this virtual network"
-}
 
 variable "subnet" {
   description = "The subnet that the VM's network interface should use"

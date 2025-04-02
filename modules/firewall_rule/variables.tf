@@ -1,9 +1,9 @@
 variable "name" {
-  description = "The name of the resource group to create"
+  description = "The name of the firewall rule to create"
 }
 
 variable "resource_group" {
-  description = "The name of the resource group to use for this virtual network"
+  description = "The name of the resrouce group to use for this resource"
 }
 
 variable "firewall" {
