@@ -116,7 +116,7 @@ module "public_subnet_firewall" {
   subnet                = module.azure_firewall_subnet.id
   ip_address            = module.public_subnet_firewall_ip_address.id
   destination_addresses = module.public_subnet_firewall_ip_address.ip
-  translated_address = module.base_environment_jump_host.private_ip_address
+  translated_address    = module.base_environment_jump_host.private_ip_address
   tag-owner             = var.tag-owner
   tag-project           = var.tag-project
   tag-lifetime          = var.tag-lifetime
