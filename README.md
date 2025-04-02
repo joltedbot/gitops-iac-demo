@@ -8,3 +8,14 @@ This is a modular base Terraform template for use with Gitlab and HCP Terraform 
 
 It is a demo environment only but will create some basic Azure resources to demonstrate the full workflow.
 
+Resources included in the template:
+ - Resrouce Group
+ - Virtual Network
+ - Subnet
+ - Virtual Nic
+ - Public IP Addresse
+ - Network Security Group
+ - Network Security Rule
+ - Firewall
+ - Firewall Rules
+ - Linux Virtual Machine
