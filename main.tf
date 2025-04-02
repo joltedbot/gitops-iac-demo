@@ -24,7 +24,7 @@ module "azure_firewall_subnet" {
   name            = "AzureFirewallSubnet"
   resource_group  = module.base_resource_group.name
   virtual_network = module.base_virtual_network.name
-  address_space   = ["10.0.0.0/24"]
+  address_space   = ["10.0.3.0/24"]
 }
 
 module "base_public_subnet" {
