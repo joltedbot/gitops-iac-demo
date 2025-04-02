@@ -21,7 +21,7 @@ module "base_virtual_network" {
 
 module "base_public_subnet" {
   source          = "./modules/subnet"
-  name            = "Base_Shared_Resources_Public_Subnet"
+  name            = "AzureFirewallSubnet"
   resource_group  = module.base_resource_group.name
   virtual_network = module.base_virtual_network.name
   address_space   = ["10.0.1.0/24"]
@@ -140,6 +140,7 @@ module "base_environment_jump_host" {
   resource_group     = module.base_resource_group.name
   region             = var.region
   subnet             = module.base_public_subnet.id
+  nic_name           = "jumphost-vnic"
   private_ip_address = "10.0.1.10"
   vm_size            = "Standard_B1s"
   root_user          = "jumphost-root"
@@ -158,6 +159,7 @@ module "base_environment_git_lab_runner" {
   resource_group     = module.base_resource_group.name
   region             = var.region
   subnet             = module.base_private_subnet.id
+  nic_name           = "runner-vnic"
   private_ip_address = "10.0.2.11"
   vm_size            = "Standard_B1s"
   root_user          = "runner-root"
