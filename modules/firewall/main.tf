@@ -39,12 +39,12 @@ resource "azurerm_firewall_nat_rule_collection" "lab_firewall_policy_rule_collec
     ]
 
     destination_addresses = [
-      var.ip_address
+      var.destination_addresses,
     ]
 
     translated_port = 22
 
-    translated_address = var.destination_addresses
+    translated_address = var.translated_address
 
     protocols = [
       "TCP",

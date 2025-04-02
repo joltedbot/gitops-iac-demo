@@ -19,8 +19,13 @@ variable "subnet" {
 variable "ip_address" {
   description = "The public IP address that the firewall will use"
 }
+variable "translated_address" {
+  description = "The destination ip addresses that this dnat rule should be sent to"
+}
+
 variable "destination_addresses" {
-  description = "The destination ip addresses that this rule should be applied to"
+  description = "The destination ip addresses that the ssh firewall rule should be applied to"
+  default     = "*"
 }
 
 

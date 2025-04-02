@@ -115,7 +115,8 @@ module "public_subnet_firewall" {
   region                = var.region
   subnet                = module.azure_firewall_subnet.id
   ip_address            = module.public_subnet_firewall_ip_address.id
-  destination_addresses = module.base_environment_jump_host.private_ip_address
+  destination_addresses = module.public_subnet_firewall_ip_address.ip
+  translated_address = module.base_environment_jump_host.private_ip_address
   tag-owner             = var.tag-owner
   tag-project           = var.tag-project
   tag-lifetime          = var.tag-lifetime
@@ -135,7 +136,7 @@ module "base_environment_jump_host" {
   nic_name           = "jumphost-vnic"
   private_ip_address = "10.0.1.10"
   vm_size            = "Standard_B1s"
-  root_user          = "jumphost-root"
+  root_user          = "lab-root"
   root_user_pub_key  = var.root_user_pub_key
   custom_data        = base64encode(file("./boot_scripts/jumphost.sh"))
   tag-owner          = var.tag-owner
@@ -154,12 +155,29 @@ module "base_environment_git_lab_runner" {
   nic_name           = "runner-vnic"
   private_ip_address = "10.0.2.11"
   vm_size            = "Standard_B1s"
-  root_user          = "runner-root"
+  root_user          = "lab-root"
   root_user_pub_key  = var.root_user_pub_key
-  custom_data        = base64encode(file("./boot_scripts/jumphost.sh"))
+  custom_data        = base64encode(file("./boot_scripts/gitlab_runner.sh"))
   tag-owner          = var.tag-owner
   tag-project        = var.tag-project
   tag-lifetime       = var.tag-lifetime
 }
 
 
+module "base_environment_cloudflared_tunnel" {
+  source             = "./modules/linux_vm"
+  name               = "cloudflared-tunnel"
+  hostname           = "cloudflared1"
+  resource_group     = module.base_resource_group.name
+  region             = var.region
+  subnet             = module.base_private_subnet.id
+  nic_name           = "tunnel-vnic"
+  private_ip_address = "10.0.2.12"
+  vm_size            = "Standard_B1s"
+  root_user          = "lab-root"
+  root_user_pub_key  = var.root_user_pub_key
+  custom_data        = base64encode(file("./boot_scripts/cloudflared_tunnel.sh"))
+  tag-owner          = var.tag-owner
+  tag-project        = var.tag-project
+  tag-lifetime       = var.tag-lifetime
+}

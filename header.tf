@@ -1,11 +1,10 @@
 terraform {
+
   backend "remote" {
     organization = "capacitance-ca"
-
     workspaces {
       name = "azure_base_environment"
     }
-
   }
 
   required_providers {
