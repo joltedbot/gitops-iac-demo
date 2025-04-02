@@ -13,3 +13,4 @@ variable "virtual_network" {
 variable "address_space" {
   description = "The address space that this subnet should use. This will need to be an available range from the Virtual Network address range in which it lives"
 }
+

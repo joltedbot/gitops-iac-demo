@@ -109,43 +109,17 @@ module "public_subnet_firewall_ip_address" {
 }
 
 module "public_subnet_firewall" {
-  source         = "./modules/firewall"
-  name           = "lab-firewall"
-  resource_group = module.base_resource_group.name
-  region         = var.region
-  subnet         = module.azure_firewall_subnet.id
-  ip_address     = module.public_subnet_firewall_ip_address.id
-  tag-owner      = var.tag-owner
-  tag-project    = var.tag-project
-  tag-lifetime   = var.tag-lifetime
-}
-
-module "public_firewall_rule_ssh_ingress" {
-  source                = "./modules/firewall_rule"
-  name                  = "ssh-ingress"
+  source                = "./modules/firewall"
+  name                  = "lab-firewall"
   resource_group        = module.base_resource_group.name
-  firewall              = module.public_subnet_firewall.name
-  priority              = 100
-  action                = "Allow"
-  source_addresses      = var.source_addresses
-  destination_ports     = ["22"]
-  destination_addresses = [module.base_environment_jump_host.private_ip_address]
-  protocols             = ["TCP"]
+  region                = var.region
+  subnet                = module.azure_firewall_subnet.id
+  ip_address            = module.public_subnet_firewall_ip_address.id
+  destination_addresses = module.base_environment_jump_host.private_ip_address
+  tag-owner             = var.tag-owner
+  tag-project           = var.tag-project
+  tag-lifetime          = var.tag-lifetime
 }
-
-module "public_firewall_rule_default_deny_ingress" {
-  source                = "./modules/firewall_rule"
-  name                  = "default-deny"
-  resource_group        = module.base_resource_group.name
-  firewall              = module.public_subnet_firewall.name
-  priority              = 1000
-  action                = "Deny"
-  source_addresses      = ["*"]
-  destination_ports     = ["*"]
-  destination_addresses = ["*"]
-  protocols             = ["Any"]
-}
-
 
 
 
