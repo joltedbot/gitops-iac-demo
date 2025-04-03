@@ -2,7 +2,7 @@ resource "azurerm_kubernetes_cluster" "lab-cluster" {
   name                = var.name
   location            = var.region
   resource_group_name = var.resource_group
-  dns_prefix          = "ionlab-"
+  dns_prefix          = "ionlab"
 
   default_node_pool {
     name          = "default"
@@ -25,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "lab-cluster" {
 
 
 resource "azurerm_kubernetes_cluster_node_pool" "lab-cluster-nodes" {
-  name                  = "${var.name}-nodepool"
+  name                  = var.node_pool_name
   kubernetes_cluster_id = azurerm_kubernetes_cluster.lab-cluster.id
   vm_size               = "Standard_DS2_v2"
   node_count            = 3
