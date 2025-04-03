@@ -16,6 +16,6 @@ Resources included in the template:
             - Network Security Rule
         - Firewall
             - Firewall Rules
+            - Public IP Address
     - Linux Virtual Machine
         - Virtual Nic
-        - Public IP Address
