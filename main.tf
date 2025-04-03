@@ -164,6 +164,24 @@ module "base_environment_git_lab_runner" {
 }
 */
 
+module "base_environment_git_lab_runner" {
+  source             = "./modules/linux_vm"
+  name               = "webserver"
+  hostname           = "webserver"
+  resource_group     = module.base_resource_group.name
+  region             = var.region
+  subnet             = module.base_private_subnet.id
+  nic_name           = "webserver-vnic"
+  private_ip_address = "10.0.2.10"
+  vm_size            = "Standard_B1s"
+  root_user          = "lab-root"
+  root_user_pub_key  = var.root_user_pub_key
+  custom_data        = base64encode(file("./boot_scripts/webserver.sh"))
+  tag-owner          = var.tag-owner
+  tag-project        = var.tag-project
+  tag-lifetime       = var.tag-lifetime
+}
+
 module "base_environment_cloudflared_tunnel" {
   source             = "./modules/linux_vm"
   name               = "cloudflared-tunnel"
@@ -184,14 +202,16 @@ module "base_environment_cloudflared_tunnel" {
 
 
 ######## Kubernetes Cluster ########
+/*
 module "base_environment_aks" {
   source         = "./modules/aks"
   name           = "lab-aks"
   resource_group = module.base_resource_group.name
   region         = var.region
-  subnet         = module.base_private_subnet.id
+  node_pool_vm_size = "Standard_D2_v2"
   node_pool_name = "labpool"
   tag-owner      = var.tag-owner
   tag-project    = var.tag-project
   tag-lifetime   = var.tag-lifetime
 }
+*/
