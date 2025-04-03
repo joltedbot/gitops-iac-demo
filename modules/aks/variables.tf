@@ -22,12 +22,6 @@ variable "node_pool_name" {
 
 
 
-
-
-
-
-
-
 // Variables to set tag fields for all resources that will use them. Should be set from the top level main.tf
 variable "tag-owner" {}
 variable "tag-project" {}
