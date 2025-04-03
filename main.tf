@@ -144,7 +144,7 @@ module "base_environment_jump_host" {
   tag-lifetime       = var.tag-lifetime
 }
 
-
+/*
 module "base_environment_git_lab_runner" {
   source             = "./modules/linux_vm"
   name               = "gitlab-runner"
@@ -162,7 +162,7 @@ module "base_environment_git_lab_runner" {
   tag-project        = var.tag-project
   tag-lifetime       = var.tag-lifetime
 }
-
+*/
 
 module "base_environment_cloudflared_tunnel" {
   source             = "./modules/linux_vm"
@@ -190,7 +190,7 @@ module "base_environment_aks" {
   resource_group = module.base_resource_group.name
   region         = var.region
   subnet         = module.base_private_subnet.id
-  node_pool_name = "labpool1"
+  node_pool_name = "labpool"
   tag-owner      = var.tag-owner
   tag-project    = var.tag-project
   tag-lifetime   = var.tag-lifetime
