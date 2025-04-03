@@ -184,3 +184,14 @@ module "base_environment_cloudflared_tunnel" {
 
 
 ######## Kubernetes Cluster ########
+module "base_environment_aks" {
+  source         = "./modules/aks"
+  name           = "lab-aks"
+  resource_group = module.base_resource_group.name
+  region         = var.region
+  subnet         = module.base_private_subnet.id
+  node_pool_name = "labpool1"
+  tag-owner      = var.tag-owner
+  tag-project    = var.tag-project
+  tag-lifetime   = var.tag-lifetime
+}

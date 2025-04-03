@@ -15,6 +15,13 @@ variable "subnet" {
   description = "The subnet ID to use for the AKS clusters nodes"
 }
 
+variable "node_pool_name" {
+  description = "The name of the node pool to create for the cluster. Must be all lowercase letters and numbers. No dash or underscore."
+  default     = "labpool"
+}
+
+
+
 
 
 
