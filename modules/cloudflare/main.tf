@@ -6,7 +6,7 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   phase       = "http_request_firewall_custom"
 
   rules = [{
-    description = "Block ports other than 80 and 443"
+    description = "Block http from non-whitelisted source addresses"
     expression  = "(http.request.full_uri contains \"ionlab.davewhite.xyz\" and ip.src ne ${var.source_addresses[0]})"
     action      = "block"
   }]
