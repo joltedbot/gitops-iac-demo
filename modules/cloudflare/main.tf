@@ -2,7 +2,7 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
   zone_id     = var.zone_id
   name        = "Web Server Custom Firewall Rules"
   description = ""
-  kind        = "zone"
+  kind        = "custom"
   phase       = "http_request_firewall_custom"
 
   rules = [{
