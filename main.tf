@@ -201,12 +201,13 @@ module "base_environment_cloudflared_tunnel" {
 }
 
 ######## Cloudflare WAF Rule ########
+/*
 module "cloudflare_zone_waf_rule" {
   source           = "./modules/cloudflare"
   source_addresses = var.source_addresses
   zone_id          = var.zone_id
 }
-
+*/
 
 ######## Kubernetes Cluster ########
 /*
