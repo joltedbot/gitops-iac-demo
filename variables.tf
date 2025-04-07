@@ -33,5 +33,12 @@ variable "root_user_pub_key" {
 
 variable "source_addresses" {
   description = "The source ip addresses that the ssh firewall rule should be applied to"
-  default     = ["96.55.128.235"]
+}
+
+variable "cloudflare_api_token" {
+  description = "The API token to use for the Cloudflare provider"
+}
+
+variable "zone_id" {
+  description = "The zone id to use for the Cloudflare provider"
 }
