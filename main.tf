@@ -144,27 +144,8 @@ module "base_environment_jump_host" {
   tag-lifetime       = var.tag-lifetime
 }
 
-/*
-module "base_environment_git_lab_runner" {
-  source             = "./modules/linux_vm"
-  name               = "gitlab-runner"
-  hostname           = "gitlab-runner"
-  resource_group     = module.base_resource_group.name
-  region             = var.region
-  subnet             = module.base_private_subnet.id
-  nic_name           = "runner-vnic"
-  private_ip_address = "10.0.2.11"
-  vm_size            = "Standard_B1s"
-  root_user          = "lab-root"
-  root_user_pub_key  = var.root_user_pub_key
-  custom_data        = base64encode(file("./boot_scripts/gitlab_runner.sh"))
-  tag-owner          = var.tag-owner
-  tag-project        = var.tag-project
-  tag-lifetime       = var.tag-lifetime
-}
-*/
 
-module "base_environment_git_lab_runner" {
+module "base_environment_webserver_runner" {
   source             = "./modules/linux_vm"
   name               = "webserver"
   hostname           = "webserver"
