@@ -5,5 +5,4 @@ variable "zone_id" {
 
 variable "source_addresses" {
   description = "The source ip addresses that the ssh firewall rule should be applied to"
-  default     = ["96.55.128.235"]
 }
