@@ -1,7 +1,7 @@
 image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 
 variables:
-  CS_IMAGE: registry.gitlab.com/clients4944609/azure_base_environment/webserver
+  CS_IMAGE: registry.gitlab.com/joltedbot-public/gitops-iac-demo:latest
 
 stages:
   - validate
