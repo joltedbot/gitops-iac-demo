@@ -7,7 +7,7 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 
   rules = [{
     description = "Block http from non-whitelisted source addresses"
-    expression  = "(http.request.full_uri contains \"ionlab.davewhite.xyz\" and ip.src ne ${var.source_addresses[0]})"
+    expression  = "(http.request.full_uri contains \"${var.destination_domain_name}\" and ip.src ne ${var.source_addresses[0]})"
     action      = "block"
   }]
 
