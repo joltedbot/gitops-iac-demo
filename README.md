@@ -19,3 +19,7 @@ Resources included in the template:
             - Public IP Address
     - Linux Virtual Machine
         - Virtual Nic
+
+
+## Environment Architecture
+![Demo Lab Architecture](resources/architecture.png)
